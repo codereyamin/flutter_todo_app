@@ -9,16 +9,29 @@ class SplashScreenView extends GetView<SplashScreenController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('SplashScreenView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'SplashScreenView is working',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+      body: GetBuilder(
+          init: SplashScreenController(),
+          builder: (context) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: Get.width / 10 * 3,
+                    height: Get.width / 10 * 3,
+                    child: const CircularProgressIndicator(),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    'Loading....',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
+              ),
+            );
+          }),
     );
   }
 }

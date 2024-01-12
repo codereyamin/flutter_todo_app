@@ -1,7 +1,4 @@
 import 'package:get/get.dart';
-
-import '../modules/home/bindings/home_binding.dart';
-import '../modules/home/views/home_view.dart';
 import '../modules/homeScreen/bindings/home_screen_binding.dart';
 import '../modules/homeScreen/views/home_screen_view.dart';
 import '../modules/onboardScreen/bindings/onboard_screen_binding.dart';
@@ -17,11 +14,6 @@ class AppPages {
   static const INITIAL = Routes.SPLASH_SCREEN;
 
   static final routes = [
-    GetPage(
-      name: _Paths.HOME,
-      page: () => const HomeView(),
-      binding: HomeBinding(),
-    ),
     GetPage(
       name: _Paths.ONBOARD_SCREEN,
       page: () => const OnboardScreenView(),

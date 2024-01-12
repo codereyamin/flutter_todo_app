@@ -11,4 +11,4 @@
 
 ## Screenshots
 
-<img src="screen_shot/image1.png" width="250"> <img src="screen_shot/image2.png" width="250"> <img src="screen_shot/image3.png" width="250"> <img src="screen_shot/image4.png" width="250">  
+<img src="screen_short/image1.png" width="250"> <img src="screen_short/image2.png" width="250"> <img src="screen_short/image3.png" width="250"> <img src="screen_short/image4.png" width="250">  

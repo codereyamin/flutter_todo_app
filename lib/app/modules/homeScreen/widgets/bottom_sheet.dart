@@ -1,12 +1,26 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_todo_app/app/modules/homeScreen/controllers/home_screen_controller.dart';
 import 'package:get/get.dart';
 
 /////////// bottom sheet create function
-bottomSheetDialog({bool isAdd = true}) async {
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController numberController = TextEditingController();
+bottomSheetDialog({
+  bool isAdd = true,
+  QueryDocumentSnapshot? documentSnapshot,
+}) async {
+  //////////////// home controller find
+  HomeScreenController homeScreenController = Get.find<HomeScreenController>();
+//////////////// check document is not null
+  if (documentSnapshot != null) {
+    var data = documentSnapshot.data()
+        as Map<String, dynamic>; ///////// data convert map
+    homeScreenController.docId.value = documentSnapshot.id.toString();
+    homeScreenController.nameController.text =
+        data["name"].toString(); //////////// assign data text controller
+    homeScreenController.numberController.text =
+        data["mobileNumber"].toString();
+  }
   //////// bottom sheet call
   await Get.bottomSheet(
     Container(
@@ -21,7 +35,7 @@ bottomSheetDialog({bool isAdd = true}) async {
         ),
       ),
       child: Form(
-        key: formKey, //////// key assign
+        key: homeScreenController.formKey, //////// key assign
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           child: Column(
@@ -32,7 +46,7 @@ bottomSheetDialog({bool isAdd = true}) async {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: TextFormField(
-                    controller: nameController,
+                    controller: homeScreenController.nameController,
                     validator: (value) {
                       if (value == null || value == "") {
                         return "Name field is required";
@@ -58,7 +72,7 @@ bottomSheetDialog({bool isAdd = true}) async {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: TextFormField(
-                    controller: numberController,
+                    controller: homeScreenController.numberController,
                     keyboardType: TextInputType.phone,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     validator: (value) {
@@ -86,7 +100,15 @@ bottomSheetDialog({bool isAdd = true}) async {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    if (formKey.currentState!.validate()) {}
+                    /////////// first check validation
+                    if (homeScreenController.formKey.currentState!.validate()) {
+                      //////////// call data is update or add function
+                      if (isAdd) {
+                        homeScreenController.addTodo();
+                      } else {
+                        homeScreenController.updateTodo();
+                      }
+                    }
                   },
 
                   ///////// button some style
